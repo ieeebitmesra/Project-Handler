@@ -46,6 +46,11 @@ def create_new_user(user_handle , user_name , password):
     
 
 
+def help():
+    print('''Commands - 
+        login user_handle password - login user_handle and return the user object.
+        create - creates a new account.''')
+
 
 def execute(command):
     '''
@@ -54,7 +59,7 @@ def execute(command):
     Commands - 
         login user_handle password - login user_handle and return the user object.
         create - creates a new account.
-    
+
     Parameters -
         command - the given command.
     Returns - 
@@ -64,6 +69,9 @@ def execute(command):
     commands = command.split(' ')
     
     if commands[0] == 'create':
+        if len(commands) != 1:
+            help()
+            return None
         user_handle = input("Enter user handle : ")
         user_name = input("Enter user name : ")
         password = input("Enter Password : ")
@@ -71,7 +79,7 @@ def execute(command):
 
     elif commands[0] == 'login':
         if len(commands) != 3:
-            print("Incorrect login command. Use - login <user_handle> <password>")
+            help()
             return None
         
         try:
@@ -81,6 +89,8 @@ def execute(command):
             print("Incorrect Login Credentials.")
             return None
 
+    elif commands[0] == 'help':
+        help()
 
     else:
         print("Incorrect Command.")

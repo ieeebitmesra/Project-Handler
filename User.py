@@ -27,19 +27,19 @@ class User():
 
         self.user_handle = user_handle
 
-        user_json_path = os.path.join(os.getcwd() , "User-Details" , "{}.json".format(user_handle) )
+        self.user_json_path = os.path.join(os.getcwd() , "User-Details" , "{}.json".format(user_handle) )
         
         # Check if file exists.
-        if not os.path.exists(user_json_path):
+        if not os.path.exists(self.user_json_path):
             raise Exception("User doesn't exist.")
 
-        with open(user_json_path , 'r') as user_info_file:
+        with open(self.user_json_path , 'r') as user_info_file:
             user_information = json.load(user_info_file)
 
 
-        current_password_hash = hashlib.sha256(password.encode()).hexdigest()
+        self.current_password_hash = hashlib.sha256(password.encode()).hexdigest()
 
-        if(current_password_hash != user_information['password_hash']):
+        if(self.current_password_hash != user_information['password_hash']):
             raise Exception("Incorrect password")
         
 
@@ -47,7 +47,35 @@ class User():
         self.project_list = user_information['project_list']
         self.current_task_list = user_information['current_task_list']
 
+    def add_project(self , project):
+        '''
+        Add a project for this user.
+        Parameters - 
+            project - A project object.
+        '''
+        self.project_list.append(project.project_name)
+
+    def update_json_file(self):
+        '''Updates user's details in the json file.'''
+        
+        user_data = {
+            'user_name' : self.user_name,
+            'user_handle' : self.user_handle,
+            'password_hash' : self.current_password_hash,
+            'project_list' : self.project_list,
+            'current_task_list' : self.current_task_list
+        }
+
+        with open(self.user_json_path , 'w') as user_info_file:
+            json.dump(user_data , user_info_file)
+        
+        
+
+
+
+
+
     def _user_details(self):
-        ''' A utility function to see user details. '''
-        print(self.__dict__)
+        ''' A utility function which returns user details. '''
+        return self.__dict__
 
