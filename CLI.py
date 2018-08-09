@@ -60,7 +60,7 @@ while True:
 
     else:
         # We are at Project home page.
-        response = ProjectHomePage.execute(command)
+        response = ProjectHomePage.execute(command , current_user , current_project)
         
         if response == 'CLOSE':
             command_line = '/' + current_user.user_handle + '/> '
@@ -71,4 +71,7 @@ while True:
     # Update user json file.
     if current_user != None:
         current_user.update_json_file()
+        
+    if current_project != None:
+        current_project.update_json_file()
 

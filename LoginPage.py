@@ -48,8 +48,8 @@ def create_new_user(user_handle , user_name , password):
 
 def help():
     print('''Commands - 
-        login user_handle password - login user_handle and return the user object.
-        create - creates a new account.''')
+    login user_handle password - login user_handle and return the user object.
+    create - creates a new account.''')
 
 
 def execute(command):

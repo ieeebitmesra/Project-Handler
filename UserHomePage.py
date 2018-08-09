@@ -19,7 +19,6 @@ def help():
     open project_name - opens the given project.
     ls -p - lists all the projects user is contributing to.
     ls -t - lists all the tasks user has taken.
-    userDetails - prints details of the user.
     logout - logs out the current user.
     ''')
 
@@ -56,8 +55,6 @@ def create_new_project(user , project_head , project_name , project_brief_descri
 
     user.add_project(Project.Project(project_name))
 
-
-
 def execute(command , user):
     '''
     Executes the given command.
@@ -80,7 +77,8 @@ def execute(command , user):
     commands = command.split(' ')
     
     if commands[0] == 'userDetails':
-        print(user._user_details())
+        user_details = user._user_details()
+
 
     elif commands[0] == 'open':
         try:
@@ -99,10 +97,12 @@ def execute(command , user):
             return None
         if commands[1] == '-p' or commands[1] == '--projects':
             project_list = user.project_list
-            print(project_list)
+            for i in range(len(project_list)):
+                print("{}. {}".format(i + 1 , project_list[i]))
         elif commands[1] == '-t' or commands[1] == '--tasks':
             task_list = user.current_task_list
-            print(task_list)
+            for i in range(len(task_list)):
+                print("{}. {}".format(i + 1, task_list[i]))
         else:
             help()
             return None
